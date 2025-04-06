@@ -1,11 +1,10 @@
 import board
-import random
 
 
 class Game:
-    def __init__(self, starting_player=random.choice(['b', 'w'])):
+    def __init__(self):
         self.board = board.Board()
-        self.current_player = starting_player
+        self.current_player = 'b'
         self.player_has_passed = False
 
     def make_move(self, x_pos, y_pos):

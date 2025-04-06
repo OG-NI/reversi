@@ -17,7 +17,6 @@ class TestBoard(unittest.TestCase):
                           ['', '', '', '', '', '', '', ''],
                           ['', '', '', '', '', '', '', ''],
                           ['', '', '', '', '', '', '', '']]
-        print(correct_pieces)
         self.assertEqual(self.board.pieces, correct_pieces)
 
 
