@@ -3,10 +3,10 @@ class Board:
         self.pieces = Board.__init_board()
 
     def __init_board():
-        board = [[''] * 8] * 3 + \
+        board = [[''] * 8 for _ in range(3)] + \
                 [['', '', '', 'b', 'w', '', '', '']] + \
                 [['', '', '', 'w', 'b', '', '', '']] + \
-                [[''] * 8] * 3
+                [[''] * 8 for _ in range(3)]
         return board
 
     def can_place_piece(self, piece):
