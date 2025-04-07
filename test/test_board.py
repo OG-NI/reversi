@@ -1,5 +1,6 @@
 import unittest
 import sys
+
 sys.path.append('..')
 from reversi import board  # noqa
 

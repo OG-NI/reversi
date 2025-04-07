@@ -1,1 +1,0 @@
-from reversi import board
