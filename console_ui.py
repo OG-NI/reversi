@@ -1,3 +1,5 @@
+import re
+
 TOP_BAR = '   ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗\n'
 SEPARATOR = '\n   ╟───┼───┼───┼───┼───┼───┼───┼───╢\n'
 BOTTOM_BAR = '\n   ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝\n'
@@ -15,14 +17,18 @@ class ConsoleUI:
 
     def input_move(self):
         while True:
-            move = input("> ")
-            # TODO validate input
+            move = input("> ").strip()
+
+            if not re.match(r'^[a-hA-H][1-8]$', move):
+                raise ValueError('Position must be in the format [A-Z][1-8].')
+
             x = ord(move[0].lower()) - 97
             y = int(move[1]) - 1
             return (x, y)
 
-    def output_message(self, message):
+    def output_message_and_wait(self, message):
         print(message)
+        input('Press <return> to continue.')
 
     def output_game_state(self, game, color):
         print(CLEAR)
@@ -42,4 +48,10 @@ class ConsoleUI:
         elif (game.current_player != ''):
             print('It is your opponents turn.')
         else:
-            print('The game is over.')
+            winner = game.board.get_winner()
+            if winner == color:
+                print('You won the game.')
+            elif winner == '':
+                print('It is a draw.')
+            else:
+                print('You lost the game.')

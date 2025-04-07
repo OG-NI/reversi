@@ -40,23 +40,23 @@ class SocketConnection:
         self.start()
 
     def start(self):
-        while self.game.current_player != '':
+        while True:
             self.ui.output_game_state(self.game, self.color)
 
-            if self.game.current_player == self.color:
-                x, y = self.ui.input_move()
+            if self.game.current_player == '':
+                break
+            elif self.game.current_player == self.color:
                 try:
+                    x, y = self.ui.input_move()
                     self.game.make_move(x, y)
                     self.connection.send(json.dumps((x, y)).encode())
                 except ValueError as error:
-                    self.ui.output_message(str(error))
+                    self.ui.output_message_and_wait(str(error))
             else:
                 x, y = json.loads(self.connection.recv(BUFSIZE).decode())
                 try:
                     self.game.make_move(x, y)
                 except ValueError:
                     pass  # ignore invalid moves made by opponent
-
-        # TODO output winner (and board, score)
 
     # TODO send and receive in separate functions
