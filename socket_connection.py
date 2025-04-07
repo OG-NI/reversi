@@ -22,8 +22,7 @@ class SocketConnection:
 
     def host(self, port):
         self.socket.bind(('', port))
-        self.socket.settimeout(10)
-        self.socket.listen(1)
+        self.socket.listen(0)
         self.connection, _ = self.socket.accept()
 
         # randomly assign player piece colors

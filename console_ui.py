@@ -6,6 +6,13 @@ CLEAR = '\033[H\033[2J'
 
 
 class ConsoleUI:
+    def __piece_char(piece):
+        if piece == 'b':
+            return '●'
+        elif piece == 'w':
+            return '○'
+        return ' '
+
     def input_move(self):
         while True:
             move = input("> ")
@@ -36,11 +43,3 @@ class ConsoleUI:
             print('It is your opponents turn.')
         else:
             print('The game is over.')
-
-    def __piece_char(piece):
-        piece_char = ' '
-        if piece == 'b':
-            piece_char = '●'
-        elif piece == 'w':
-            piece_char = '○'
-        return piece_char
