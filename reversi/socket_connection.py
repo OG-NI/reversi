@@ -2,8 +2,8 @@ import socket
 import random
 import json
 
-import game
-import console_ui
+from reversi import game
+from reversi import console_ui
 
 
 class SocketConnection:

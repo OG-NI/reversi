@@ -1,8 +1,7 @@
 import argparse
 import re
 
-from socket_connection import SocketConnection
-from console_ui import ConsoleUI
+from reversi import socket_connection, console_ui
 
 
 def __parse_ip_port(string):
@@ -15,7 +14,7 @@ def __parse_ip_port(string):
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(prog="python3 -m reversi")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-n', '--new', metavar='<port>', type=int,
                        help='start a new game')
@@ -23,7 +22,7 @@ def main():
                        type=__parse_ip_port, help='join a game')
 
     args = parser.parse_args()
-    sc = SocketConnection(ConsoleUI())
+    sc = socket_connection.SocketConnection(console_ui.ConsoleUI())
     if args.new:
         sc.host(args.new)
     else:

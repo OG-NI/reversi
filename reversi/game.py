@@ -1,4 +1,4 @@
-import board
+from reversi import board
 
 
 class Game:
