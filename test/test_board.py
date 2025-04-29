@@ -20,6 +20,28 @@ class TestBoard(unittest.TestCase):
                           ['', '', '', '', '', '', '', '']]
         self.assertEqual(self.board.pieces, correct_pieces)
 
+    def test_can_place_piece(self):
+        can_place_piece = self.board.can_place_piece('w')
+        self.assertTrue(can_place_piece)
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_get_winner_draw(self):
+        winner = self.board.get_winner()
+        self.assertEqual(winner, '')
+
+    def test_get_winner_white(self):
+        self.board.pieces[3][3] = 'w'
+        self.board.pieces[2][3] = 'w'
+        winner = self.board.get_winner()
+        self.assertEqual(winner, 'w')
+
+    def test_place_piece_not_empty(self):
+        self.assertRaises(ValueError, self.board.place_piece, 'w', 3, 3)
+
+    def test_place_piece_not_reversing(self):
+        self.assertRaises(ValueError, self.board.place_piece, 'w', 3, 5)
+
+    def test_place_piece_reversing(self):
+        self.board.place_piece('w', 3, 2)
+        self.assertEqual(self.board.pieces[2][3], 'w', msg='place new piece')
+        self.assertEqual(
+            self.board.pieces[3][3], 'w', msg='reverse opponents piece')

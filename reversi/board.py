@@ -10,6 +10,10 @@ class Board:
         return board
 
     def can_place_piece(self, piece):
+        """
+        Check if the player with a given `piece` can place a piece
+        anywhere on the board.
+        """
         if piece not in ('b', 'w'):
             return False
 
@@ -21,6 +25,9 @@ class Board:
         return False
 
     def get_winner(self):
+        """
+        Return the piece of the player with the most pieces on the board.
+        """
         w_count = sum(row.count('w') for row in self.pieces)
         b_count = sum(row.count('b') for row in self.pieces)
         if (w_count > b_count):
@@ -31,6 +38,10 @@ class Board:
             return ''
 
     def place_piece(self, piece, x_pos, y_pos):
+        """
+        Place a `piece` at the position given by `x_pos` and `y_pos`.
+        Raises a `ValueError` if the move is not valid.
+        """
         if self.pieces[y_pos][x_pos] != '':
             raise ValueError('Pieces must be placed on empty squares')
 
@@ -42,6 +53,12 @@ class Board:
         self.pieces[y_pos][x_pos] = piece
 
     def __reverse(self, piece, x_pos, y_pos, do_reverse):
+        """
+        Try to reverse the pieces around the position given by `x_pos` and
+        `y_pos` according to the rules if a `piece` would be placed. Returns
+        `True` if the move would reverse at least one of the opponents pieces.
+        If `do_reverse` is set to `False` no pieces get reversed.
+        """
         positions = []
         positions.append(zip(range(x_pos + 1, 8), [y_pos] * (8 - x_pos)))
         positions.append(zip(range(x_pos - 1, -1, -1), [y_pos] * (x_pos + 1)))
@@ -68,6 +85,12 @@ class Board:
         return reverse_performed
 
     def __reverse_dimension(self, piece, positions, do_reverse):
+        """
+        Try to reverse the pieces at the given `positions` if a `piece` was
+        placed. Returns `True` if the move would reverse at least one of the
+        opponents pieces. If `do_reverse` is set to `False` no pieces get
+        reversed.
+        """
         if not self.__dimension_has_second_piece(piece, positions):
             return False
 
@@ -82,6 +105,10 @@ class Board:
         return reverse_performed
 
     def __dimension_has_second_piece(self, piece, positions):
+        """
+        Check if the given `positions` contain at least one other piece
+        with the same color as `piece`.
+        """
         for x, y in positions:
             if self.pieces[y][x] == '':
                 return False
